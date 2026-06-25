@@ -1,0 +1,9 @@
+# Pong Game Requirements
+# This project uses only Python standard library modules
+# No external dependencies required
+
+# Python version requirement
+# python>=3.6
+
+# Note: The turtle module is included in Python's standard library
+# No additional packages need to be installed
