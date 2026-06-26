@@ -1,0 +1,9 @@
+# Turtle Race Requirements
+# This project uses only Python standard library modules
+# No external dependencies required
+
+# Python version requirement
+# python>=3.9  (uses list[Turtle] type hint syntax)
+
+# Note: The turtle, random, and time modules are all included
+# in Python's standard library — no pip installs needed
