@@ -23,9 +23,10 @@ screen.onkey(snake.right, "Right")
 
 # main game loop
 game_is_on = True
+move_speed = 0.2
 while game_is_on:
     screen.update()
-    time.sleep(0.2)
+    time.sleep(move_speed)
     snake.move()
 
     # Detect collision with food
@@ -33,6 +34,7 @@ while game_is_on:
         food.refresh()
         snake.extend()
         scoreboard.increase_score()
+        move_speed *= 0.9
         
     # Detect collision with wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
