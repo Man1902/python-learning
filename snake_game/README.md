@@ -4,14 +4,15 @@ A classic Snake game implementation using Python's Turtle graphics library.
 
 ## Description
 
-This is a simple yet entertaining Snake game where you control a snake to eat food and grow longer. The game ends when the snake collides with the wall or its own tail.
+This is a simple yet entertaining Snake game where you control a snake to eat food and grow longer. When the snake collides with the wall or its own tail, the score resets and the game continues — your **high score is saved automatically** between rounds.
 
 ## Features
 
 - **Classic Snake Gameplay**: Control the snake using arrow keys
-- **Score Tracking**: Keep track of your score as you eat food
+- **Score Tracking**: Keep track of your current score as you eat food
+- **Persistent High Score**: Best score is saved to `data.txt` and shown on screen across rounds
 - **Progressive Speed**: Snake gets faster with every food eaten (speed increases by 10% per food)
-- **Collision Detection**: Game ends on wall or self-collision
+- **Collision Handling**: On wall or tail collision the snake resets and the game continues — no hard game-over
 - **Growing Snake**: Snake extends each time it eats food
 - **Smooth Animation**: Clean graphics using Turtle module
 
@@ -50,7 +51,7 @@ python3 main.py
 3. Each food eaten makes the snake move 10% faster — the challenge ramps up!
 4. Avoid hitting the walls (game boundaries)
 5. Avoid colliding with your own tail
-6. The game ends when you hit a wall or your tail
+6. On a collision, the snake resets and a new round begins automatically — your high score is preserved
 
 ## Project Structure
 
@@ -60,6 +61,8 @@ snake_game/
 ├── snake.py         # Snake class with movement logic
 ├── food.py          # Food class for random food placement
 ├── scoreboard.py    # Scoreboard class for score tracking
+├── data.txt         # Persisted high score (auto-updated at runtime)
+├── requirements.txt # Python dependencies
 ├── .gitignore       # Git ignore file
 └── README.md        # This file
 ```
@@ -74,11 +77,6 @@ snake_game/
 - Handles collision detection (food at distance < 15, walls at ±280, tail at distance < 10)
 - Manages keyboard input
 
-### snake.py
-- `Snake` class manages the snake's segments
-- Handles snake movement and direction changes
-- Implements snake extension when food is eaten
-- Prevents 180-degree turns
 
 ### food.py
 - `Food` class inherits from Turtle
@@ -86,9 +84,17 @@ snake_game/
 - Refreshes food position when eaten
 
 ### scoreboard.py
-- `Scoreboard` class displays current score at position `(0, 260)`
-- `increase_score()` clears the previous score text before redrawing to avoid stacking
-- Shows "Game Over" message at the centre when game ends
+- `Scoreboard` class displays current score and high score at position `(0, 260)` — format: `Score: X   High Score: Y`
+- Reads the persisted high score from `data.txt` on initialisation
+- `increase_score()` increments score and redraws the scoreboard
+- `reset()` checks if the current score beats the high score, writes the new high score to `data.txt` if so, then resets the current score to `0` and redraws — no game-over screen
+
+### snake.py
+- `Snake` class manages the snake's segments
+- Handles snake movement and direction changes
+- `extend()` appends a new segment at the tail position when food is eaten
+- `reset()` teleports all existing segments off-screen, clears the list, and re-creates the snake at the starting positions — used to restart after a collision
+- Prevents 180-degree turns (can't reverse direction directly)
 
 ## Game Configuration
 
@@ -114,8 +120,9 @@ You can modify these values in the respective files:
 ## Future Enhancements
 
 Potential improvements:
-- [ ] Add high score tracking with file persistence
+- [x] ~~Add high score tracking with file persistence~~ — done: high score saved to `data.txt`
 - [x] ~~Implement difficulty levels (speed variations)~~ — done: speed increases 10% per food
+- [x] ~~Game continuation after collision~~ — done: snake resets and game resumes automatically
 - [ ] Add sound effects
 - [ ] Create a pause/resume feature
 - [ ] Add obstacles or power-ups
